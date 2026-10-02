@@ -1,0 +1,8 @@
+{
+  "port": 8788,
+  "bind": "100.x.y.z",
+  "dataDir": "~/.local/share/pi-bot-ui",
+  "herdrSock": "~/.config/herdr/herdr.sock",
+  "originAllow": [],
+  "promptTimeoutMs": 20000
+}
