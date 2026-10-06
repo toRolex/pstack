@@ -1,85 +1,86 @@
-<!-- mirror:start — this top section is specific to the mirror. Everything after mirror:end is the upstream README from cursor/plugins/pstack, unchanged. To sync with upstream, follow MIRROR.md. -->
-# pstack — standalone mirror
+中文 | [English](./README.en.md)
 
-> **Mirror** of [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) — kept in sync for standalone use.
-> Works in Claude Code, Codex, Pi, and other agents, not only Cursor.
-> See also [`backnotprop/bro`](https://github.com/backnotprop/bro), referenced by the [`/bro`](./skills/bro/SKILL.md) skill.
+<!-- 本页由原英文 README 翻译而来。镜像同步说明见 MIRROR.md，保留的英文版见 README.en.md。 -->
+# pstack 独立镜像
 
-Cursor's original README is [further down this page](#pstack).
+> 本仓库是 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) 的独立镜像，持续同步上游。
+> 可用于 Claude Code、Codex、Pi 等 agent，不限于 Cursor。
+> 另见 [`backnotprop/bro`](https://github.com/backnotprop/bro)，[`/bro`](./skills/bro/SKILL.md) 技能引用了该项目。
 
-## Install
+Cursor 原 README 的中文译文在[本页下方](#pstack)。
 
-pstack is a folder of plain [Agent Skills](https://agentskills.io) (`skills/<name>/SKILL.md`). You don't need Cursor. The [`skills` CLI](https://skills.sh) installs them into Claude Code, Codex, Pi, Cursor, OpenCode, and other agents:
+## 安装
+
+pstack 是一组普通的 [Agent Skills](https://agentskills.io) 文件，路径为 `skills/<name>/SKILL.md`。使用它们不需要 Cursor。[`skills` CLI](https://skills.sh) 可以将技能安装到 Claude Code、Codex、Pi、Cursor、OpenCode 等 agent 中：
 
 ```bash
-npx skills add backnotprop/pstack
+npx skills add toRolex/pstack
 ```
 
-The CLI shows every skill in a list you can search. Select the skills you want, then select your agents.
+CLI 会显示可搜索的技能列表。先选择需要的技能，再选择要安装到哪些 agent。
 
-## Skills
+## 技能
 
-These skills don't call other pstack skills, so each one works alone:
+以下技能不会调用其他 pstack 技能，可以单独使用：
 
-`unslop`, `bro`, `how`, `tdd`, `typescript-best-practices`, `arena`, `swarm`, `interrogate`, `reflect`, `show-me-your-work`, `figure-it-out`, `automate-me`
+`unslop`、`bro`、`how`、`tdd`、`typescript-best-practices`、`arena`、`swarm`、`interrogate`、`reflect`、`show-me-your-work`、`figure-it-out`、`automate-me`
 
-Some skills call other skills. Install these together:
+有些技能会调用其他技能。请一起安装：
 
-| Skill | Also install |
+| 技能 | 同时安装 |
 |---|---|
-| `teach` | `how`, `why` |
+| `teach` | `how`、`why` |
 | `why` | `how` |
 | `technical-writing` | `unslop` |
-| `architect` | `arena`, `how` |
-| `blast-radius` | `arena`, `how`, `why`, `unslop` |
+| `architect` | `arena`、`how` |
+| `blast-radius` | `arena`、`how`、`why`、`unslop` |
 | `create-verification-skill` | `maintain-verification-skill` |
-| `poteto-mode` | all `principle-*` skills and most of the other skills |
+| `poteto-mode` | 所有 `principle-*` 技能及大部分其他技能 |
 
-## What this mirror changes
+## 本镜像的改动
 
-Many skills were Cursor-specific. They've been rewritten to work in any harness.
-<!-- mirror:end -->
+许多技能原本只适用于 Cursor。本镜像已改写这些技能，使其可在其他 agent 运行环境中使用。
 
 ---
 
 # pstack
 
-i'm [poteto](https://x.com/poteto). i'm not a president or ceo, but i've worked with millions of lines of code at Meta, Netflix, and Cursor. i'm also on the react core team where i help build and maintain react compiler.
+我是 [poteto](https://x.com/poteto)。我不是总裁或 CEO，但在 Meta、Netflix 和 Cursor 工作时接触过数百万行代码。我也是 React 核心团队成员，参与构建和维护 React Compiler。
 
-there's a growing sense that ai writes too much slop code. i agree. i don't want to ship like a team of twenty slop artists. throughput without quality is not a goal i aspire to. if you want to go fast, go deep first. 
+越来越多人觉得 AI 写了太多低质量代码，我也这么认为。我不想像一支由二十个低质量代码写手组成的团队那样交付。只有产出、没有质量，不是我的目标。想做得快，先把问题理解透。
 
-**pstack is my answer.** these are the same skills i use everyday to ship high quality code at Cursor. this turns cursor into a real engineering team. the goal is not to maximize loc, in fact it's the opposite. pstack helps you write less, but higher quality code.
+**pstack 是我的答案。** 这些技能就是我每天在 Cursor 用来交付高质量代码的技能。它们让 Cursor 像一支真正的工程团队一样工作。目标不是增加代码行数，恰恰相反。pstack 帮你少写代码，同时提高质量。
 
-**pstack gives you fearless parallelism.** when you can go deep on one agent and trust it to write good, verifiable code, you can truly parallelize with confidence. start multiple agents up with `poteto-mode` and trust that they'll apply rigorous engineering principles to their work.
+**pstack 让你更有把握地并行工作。** 当你能让一个 agent 深入处理任务，并信任它写出可验证的好代码时，才有信心并行推进。启动多个使用 `poteto-mode` 的 agent，让它们按严格的工程原则完成工作。
 
-**cursor gives you the best of all worlds.** every frontier model has its strengths and weaknesses. use any model with pstack. in fact, many of my skills use multi-model workflows to take advantage of each model's unique strengths.
+**Cursor 让你结合不同模型的长处。** 每个前沿模型都有优点和缺点。pstack 可以配合任意模型使用。我的许多技能采用多模型工作流，利用各个模型的长处。
 
-fork it. improve it. make it yours. PRs are welcome! 
+Fork 它，改进它，按你的需要调整它。欢迎提交 PR！
 
-## install
+## 在 Cursor 中安装
 
 ```bash
 /add-plugin pstack
 ```
 
-## get started
+## 开始使用
 
-two steps:
+只需两步：
 
-1. run [`/setup-pstack`](./skills/setup-pstack/SKILL.md), pick a reasoning budget, and choose which models you want.
-2. use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) whenever you're doing anything that requires rigor.
+1. 运行 [`/setup-pstack`](./skills/setup-pstack/SKILL.md)，选择推理预算和要使用的模型。
+2. 遇到需要严谨处理的任务时，使用 [`/poteto-mode`](./skills/poteto-mode/SKILL.md)。
 
-new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. stuck, or unsure which skill fits? ask [`/poteto-help`](./skills/poteto-help/SKILL.md).
+第一次使用？[pstack 指南](./docs/guide/README.md) 会带你完成第一个实际任务，涵盖配置、提示词、验证和通宵运行。遇到困难，或不知道该选哪个技能？问 [`/poteto-help`](./skills/poteto-help/SKILL.md)。
 
-that's it. the other skills are situational; the mode skill uses them for you as needed. out of the box the mode splits work by model strength: code delegates (feature, refactoring, bug fix, perf, hillclimb) go to grok, while the hardest changes, prose, and judgment go to opus 5.5. the default panel is opus 5.5 / grok. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) changes any of it.
+其他技能按场景使用，模式技能会在需要时调用它们。默认情况下，模式按模型长处分配工作。代码任务，包括功能开发、重构、修复 bug、性能优化和持续指标优化，交给 Grok。最难的改动、文字写作和判断交给 Opus 5.5。默认评审组合是 Opus 5.5 和 Grok。[`/setup-pstack`](./skills/setup-pstack/SKILL.md) 可以修改这些配置。
 
-## usage
+## 用法
 
-use [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task. it reads your request, picks from a set of playbooks, and runs the other skills as the steps need them.
+任务开始时使用 [`/poteto-mode`](./skills/poteto-mode/SKILL.md)。它会读取你的请求，选择适合的操作流程，并在各步骤需要时运行其他技能。
 
-### just use [`/poteto-mode`](./skills/poteto-mode/SKILL.md)
+### 直接使用 [`/poteto-mode`](./skills/poteto-mode/SKILL.md)
 
-this skill is the main shortcut. i use it whenever i need the agent to do rigorous engineering work. it comes with twenty-three playbooks:
+这是主要入口。需要 agent 严谨地做工程工作时，我就使用它。它包含二十三套操作流程：
 
 ```
 /poteto-mode this pr has a subtle bug where the scroll drifts every 750ms even when idle. repro
@@ -92,53 +93,51 @@ morning.
 ```
 
 <details>
-<summary>the twenty-three playbooks</summary>
+<summary>全部二十三套操作流程</summary>
 
-| playbook | for |
+| 操作流程 | 适用场景 |
 |---|---|
-| [investigation](./skills/poteto-mode/playbooks/investigation.md) | a read-only question. how does x work, why was y built this way, are we sure. |
-| [bug fix](./skills/poteto-mode/playbooks/bug-fix.md) | reproduce a defect, root-cause it, and fix with runtime evidence. |
-| [perf](./skills/poteto-mode/playbooks/perf-issue.md) | trace a measured slowness and improve it against a baseline. |
-| [hillclimb](./skills/poteto-mode/playbooks/hillclimb.md) | sustained, scientific improvement of one metric against a target, looping hypotheses with before/after measurement and one commit per accepted win. |
-| [runtime forensics](./skills/poteto-mode/playbooks/runtime-forensics.md) | diagnose a live symptom (leak, idle-cpu spin, glitch) from instrumentation. |
-| [trace forensics](./skills/poteto-mode/playbooks/trace-forensics.md) | diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot). |
-| [feature](./skills/poteto-mode/playbooks/feature.md) | new or changed behavior, built from a named data shape. |
-| [refactoring](./skills/poteto-mode/playbooks/refactoring.md) | a behavior-preserving change to structure or shape. |
-| [prototype](./skills/poteto-mode/playbooks/prototype.md) | a throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it. |
-| [visual parity](./skills/poteto-mode/playbooks/visual-parity.md) | pixel-exact ui equivalence between two implementations. |
-| [authoring a skill](./skills/poteto-mode/playbooks/authoring-a-skill.md) | writing or editing a SKILL.md. |
-| [eval](./skills/poteto-mode/playbooks/eval.md) | test how a skill or prompt change affects agent behavior, blinded. |
-| [babysit](./skills/poteto-mode/playbooks/babysit.md) | drive a pr or a stack to merge-ready: conflicts, review threads, ci. |
-| [shipping](./skills/poteto-mode/playbooks/shipping.md) | independently verify a green stack, then land the contiguous verified run bottom-up through github by default or origin when available. |
-| [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | drive a long task to completion without stopping. |
-| [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | a standing project handed to one coordinator chat: multi-day, many stacked prs, fleets of subagents. |
-| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | run independent prs to merged with one owner per pr and a root swarm verdict on each round, from the code-ready head on. |
-| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | build and verify one linear base-branch stack for the operator to review and land. |
-| [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | resume or take over a prior agent's in-flight work. |
-| [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | suspend in-flight work cleanly so it can be resumed later. |
-| [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | work that spans phases or stacked PRs. |
-| [worktree cleanup](./skills/poteto-mode/playbooks/worktree-cleanup.md) | reclaim disk by pruning merged or abandoned worktrees and stale ios simulators, safety-gated. |
-| [opening a pr](./skills/poteto-mode/playbooks/opening-a-pr.md) | open a ready pr from small ordered commits with a conventional commits title and a briefing-style body. invoked at the end of every other playbook. |
+| [investigation](./skills/poteto-mode/playbooks/investigation.md) | 只读调查。了解 X 如何工作、Y 为什么这样设计，或核实某个判断。 |
+| [bug fix](./skills/poteto-mode/playbooks/bug-fix.md) | 复现缺陷，找出根因，并用运行时证据验证修复。 |
+| [perf](./skills/poteto-mode/playbooks/perf-issue.md) | 追查已测得的性能问题，并与基线比较改进结果。 |
+| [hillclimb](./skills/poteto-mode/playbooks/hillclimb.md) | 围绕目标持续改进一个指标。反复提出假设，测量改动前后的结果，每次确认有效的改进单独提交。 |
+| [runtime forensics](./skills/poteto-mode/playbooks/runtime-forensics.md) | 根据运行时观测数据诊断内存泄漏、空闲时 CPU 忙转或界面异常等现象。 |
+| [trace forensics](./skills/poteto-mode/playbooks/trace-forensics.md) | 分析已有的性能采样文件，包括 cpuprofile、trace、spindump 和堆快照。 |
+| [feature](./skills/poteto-mode/playbooks/feature.md) | 从明确的数据结构出发，构建新增或改动的行为。 |
+| [refactoring](./skills/poteto-mode/playbooks/refactoring.md) | 改变结构，但保持行为不变。 |
+| [prototype](./skills/poteto-mode/playbooks/prototype.md) | 用可丢弃的小型原型决定设计或行为，或通过实验解决事实问题。 |
+| [visual parity](./skills/poteto-mode/playbooks/visual-parity.md) | 让两个实现的 UI 达到像素级一致。 |
+| [authoring a skill](./skills/poteto-mode/playbooks/authoring-a-skill.md) | 编写或修改 SKILL.md。 |
+| [eval](./skills/poteto-mode/playbooks/eval.md) | 通过盲测评估技能或提示词变化对 agent 行为的影响。 |
+| [babysit](./skills/poteto-mode/playbooks/babysit.md) | 处理冲突、评审意见和 CI，让一个 PR 或一组堆叠 PR 达到可合并状态。 |
+| [shipping](./skills/poteto-mode/playbooks/shipping.md) | 独立验证已通过检查的 PR 栈，再从底部开始合并连续通过验证的部分。默认通过 GitHub 操作，有 Origin 时使用 Origin。 |
+| [autonomous run](./skills/poteto-mode/playbooks/autonomous-run.md) | 持续推进长任务，直到完成。 |
+| [orchestrate](./skills/poteto-mode/playbooks/orchestrate.md) | 由一个协调者管理持续数天、多组堆叠 PR 和多个子代理的项目。 |
+| [autopilot-full](./skills/poteto-mode/playbooks/autopilot-full.md) | 从代码就绪的版本开始推进独立 PR，直到合并。每个 PR 有一个负责人，每轮由主协调者汇总 swarm 验证结论。 |
+| [autopilot-stack](./skills/poteto-mode/playbooks/autopilot-stack.md) | 构建并验证一组基于目标分支的线性 PR 栈，交给操作者评审和合并。 |
+| [session pickup](./skills/poteto-mode/playbooks/session-pickup.md) | 恢复或接手先前 agent 尚未完成的工作。 |
+| [pause safely](./skills/poteto-mode/playbooks/pause-safely.md) | 安全暂停进行中的工作，便于之后恢复。 |
+| [multi-phase plan](./skills/poteto-mode/playbooks/multi-phase-plan.md) | 处理跨阶段或跨多个堆叠 PR 的工作。 |
+| [worktree cleanup](./skills/poteto-mode/playbooks/worktree-cleanup.md) | 在确认安全后，清理已合并或废弃的 worktree 和过期的 iOS 模拟器，回收磁盘空间。 |
+| [opening a pr](./skills/poteto-mode/playbooks/opening-a-pr.md) | 将小而有序的提交整理成可评审的 PR，使用 Conventional Commits 标题和简报式正文。在其他每套操作流程结束时调用。 |
 
 </details>
 
+调用后，它会：
 
+1. 为任务匹配一套[操作流程](./skills/poteto-mode/playbooks/)，创建待办列表，并将流程步骤原样复制为列表的前几项。
+2. 在各步骤需要时调用其他技能。
+3. 写出没有 AI 套话的回复，说明使用者和维护者各自会受到什么影响。
 
-when invoked it:
+完整规则和操作流程见 [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md)。
 
-1. matches your task to a [playbook](./skills/poteto-mode/playbooks/) and opens a todo list whose first items are its steps, copied in verbatim.
-2. routes to the other skills as the steps fire.
-3. writes unslopped replies framed for the consumer and the maintainer.
+如果想让 [`/poteto-mode`](./skills/poteto-mode/SKILL.md) 跨轮次保持启用，从 `/` 菜单中选择它，然后按 Option+Enter，在 Windows 上按 Alt+Enter，不要只按 Enter。这样会将它设为 [Cursor 自定义模式](https://cursor.com/docs/skills)，可在 agents 窗口和 CLI 中使用。它每轮都保留在上下文中，遇到匹配的操作流程或需要严谨处理的任务时会生效，其他时候不干预。只按 Enter 则仅附加到当前消息。要停用，可以直接说明，或退出该模式。
 
-the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/poteto-mode/SKILL.md).
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 很适合配合 Cursor 的 `/loop` 命令。你可以让 Cursor 连续工作数小时，仍按严格的流程执行。
 
-to keep [`/poteto-mode`](./skills/poteto-mode/SKILL.md) on across turns, pick it from the `/` menu and press option+enter (mac) or alt+enter (windows) instead of enter. that makes it a [custom mode](https://cursor.com/docs/skills), which cursor offers in the agents window and the cli. it stays in context every turn, applies itself when a playbook matches or the task needs rigor, and stays out of the way otherwise. plain enter attaches it to one message only. say so to opt out, or exit the mode to turn it off.
+## 技能参考
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) works extremely well with cursor's `/loop` command. you can make cursor work for many hours without sacrificing rigor.
-
-## skills
-
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) runs most of these for you when a step needs them (`how`, `why`, `architect`, `arena`, `swarm`, `interrogate`, `unslop`, `no-comments`, `technical-writing`, `tdd`, and the principles). the table below is for when you want one directly:
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 会在需要时运行其中大部分技能，包括 `how`、`why`、`architect`、`arena`、`swarm`、`interrogate`、`unslop`、`no-comments`、`technical-writing`、`tdd` 和原则技能。想直接调用某个技能时，可查阅下表：
 
 ```
 /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
@@ -149,49 +148,46 @@ to keep [`/poteto-mode`](./skills/poteto-mode/SKILL.md) on across turns, pick it
 ```
 
 <details>
-<summary>all skills</summary>
+<summary>全部技能</summary>
 
-| skill | use it when |
+| 技能 | 适用场景 |
 |---|---|
-| [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | default entry point for any non-trivial task. |
-| [`/poteto-help`](./skills/poteto-help/SKILL.md) | you're new to pstack, or unsure which skill, playbook, or principle fits. finds out what you're trying to do, answers that part, and hands you a prompt to type. runs only when you type `/poteto-help`. |
-| [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
-| [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers available MCPs at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
-| [`/recall`](./skills/recall/SKILL.md) | you're starting or resuming work and want your recent context on a topic rebuilt from your own chat history and the shared record, handed back as a tight current-state brief. |
-| [`/blast-radius`](./skills/blast-radius/SKILL.md) | you have a small-looking change and want to know what else it could break, with the one fact it's safe because of proven by running code, not asserted. |
-| [`/architect`](./skills/architect/SKILL.md) | you're about to write code that crosses a function boundary and want the caller's usage, types, and module shape settled first. |
-| [`/arena`](./skills/arena/SKILL.md) | you want N parallel attempts at the same thing, then to grab the best parts of each. |
-| [`/swarm`](./skills/swarm/SKILL.md) | you want N parallel workers across different slices or races, then one aggregated report. |
-| [`/interrogate`](./skills/interrogate/SKILL.md) | you have a diff and want different models to try to break it, including a strict code-quality lens. |
-| [`/automate-me`](./skills/automate-me/SKILL.md) | you want your own `-mode` skill, drafted from how you've actually worked. |
-| [`/make-bot-ui`](./skills/make-bot-ui/SKILL.md) | you want a page or dashboard whose buttons wake a Grok Bot over a webhook, including the sender-key handoff and Tailscale. |
-| [`/setup-pstack`](./skills/setup-pstack/SKILL.md) | you want to pick which models pstack uses per role. detects your models and writes a config rule. |
-| [`/reflect`](./skills/reflect/SKILL.md) | a long task landed and you want the recipe captured as a skill edit. |
-| [`/correct`](./skills/correct/SKILL.md) | you keep correcting agents for the same mistakes. mines history for mistake classes, fixes each at the highest level that works (architecture, then types, lint, and ci, then tests, with docs last), and keeps a table pairing each rule with what enforces it. |
-| [`/teach`](./skills/teach/SKILL.md) | you want to actually understand a change or subsystem, not just have it summarized. runs how + why and weaves one plain explanation, built up diagram by diagram. |
-| [`/tdd`](./skills/tdd/SKILL.md) | you're fixing a bug and there's a cheap local test path. write the failing test first, then the fix. |
-| [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | you ran a benchmark or measured a speedup or regression. vets the number (limiter, tuning, errors, repeat runs, end-to-end relevance) before you report or act on it. |
-| [`/no-comments`](./skills/no-comments/SKILL.md) | strip comments before review; spawns Comment Sicko, fixes accepted findings, offers encodings for claimed constraints. |
-| [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | you're reading or editing typescript. grounds the type-system-discipline principle in syntax. |
-| [`/figure-it-out`](./skills/figure-it-out/SKILL.md) | no bundled playbook fits. designs a rigorous, auditable playbook for the task. |
-| [`/show-me-your-work`](./skills/show-me-your-work/SKILL.md) | you want a reviewable decision trail. logs decisions to a tsv you can commit. |
-| [`/create-verification-skill`](./skills/create-verification-skill/SKILL.md) | your project has no scripted way to prove app behavior. generates a project-local verify skill with a feature map, for any language or platform. |
-| [`/maintain-verification-skill`](./skills/maintain-verification-skill/SKILL.md) | your verify skill's feature map has drifted from the app. source wave + one live pass, at most one PR of proven corrections. |
-| [`/unslop`](./skills/unslop/SKILL.md) | you're cleaning up writing. removes AI tells. |
-| [`/bro`](./skills/bro/SKILL.md) | you want the last message restated in plain human language, no jargon. |
-| [`/technical-writing`](./skills/technical-writing/SKILL.md) | layered doc standard (Diátaxis + Google developer style + STE + Global English) for docs, RFCs, readmes, PR descriptions, commit messages. |
+| [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | 所有非简单任务的默认入口。 |
+| [`/poteto-help`](./skills/poteto-help/SKILL.md) | 刚开始使用 pstack，或不知道该选哪个技能、操作流程或原则。它会了解你的目标，回答相关问题，并给出可输入的提示词。仅在你输入 `/poteto-help` 时运行。 |
+| [`/how`](./skills/how/SKILL.md) | 想了解一个子系统如何工作。 |
+| [`/why`](./skills/why/SKILL.md) | 想了解为什么采用当前设计。它在运行时发现可用的 MCP，并行查询各类证据，包括版本控制、问题追踪、长篇文档、即时聊天、基础设施可观测数据、错误追踪和分析数据仓库。 |
+| [`/recall`](./skills/recall/SKILL.md) | 开始或恢复工作时，想从自己的聊天记录和共享记录中重建某个主题的近期上下文，得到简明的现状说明。 |
+| [`/blast-radius`](./skills/blast-radius/SKILL.md) | 想知道一个看似很小的改动还可能影响什么，并通过实际运行代码证明它安全所依赖的关键事实，而不是只作断言。 |
+| [`/architect`](./skills/architect/SKILL.md) | 即将编写跨函数边界的代码，想先确定调用方式、类型和模块结构。 |
+| [`/arena`](./skills/arena/SKILL.md) | 想并行尝试同一个任务 N 次，再选取各次尝试中最好的部分。 |
+| [`/swarm`](./skills/swarm/SKILL.md) | 想让 N 个工作者分别处理不同部分或竞速完成任务，再汇总成一份报告。 |
+| [`/interrogate`](./skills/interrogate/SKILL.md) | 已有 diff，想让不同模型尝试找出问题，其中包含严格的代码质量评审。 |
+| [`/automate-me`](./skills/automate-me/SKILL.md) | 想根据自己的实际工作方式生成专属的 `-mode` 技能。 |
+| [`/make-bot-ui`](./skills/make-bot-ui/SKILL.md) | 想构建页面或仪表板，用按钮通过 webhook 唤醒 Grok Bot，并处理发送者密钥交接和 Tailscale。 |
+| [`/setup-pstack`](./skills/setup-pstack/SKILL.md) | 想为每种角色选择 pstack 使用的模型。它会检测可用模型并写入配置规则。 |
+| [`/reflect`](./skills/reflect/SKILL.md) | 长任务完成后，想把工作方法记录为技能改动。 |
+| [`/correct`](./skills/correct/SKILL.md) | 不断纠正 agent 的同类错误。它会从历史记录中归纳错误类别，优先在最有效的层面修复，依次考虑架构、类型、lint、CI 和测试，最后才是文档。它还会维护规则与执行机制的对应表。 |
+| [`/teach`](./skills/teach/SKILL.md) | 想真正理解一个改动或子系统，而不只是看摘要。它会运行 how 和 why，结合图解逐步形成一份直白的说明。 |
+| [`/tdd`](./skills/tdd/SKILL.md) | 正在修复 bug，且本地测试成本低。先写失败测试，再修复。 |
+| [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | 已运行基准测试，或测得性能提升或回退。在报告或采用数据前，检查限制因素、调优、错误、重复测量和端到端相关性。 |
+| [`/no-comments`](./skills/no-comments/SKILL.md) | 想在评审前清理注释。它会启动 Comment Sicko，修复认可的问题，并建议如何将声称存在的约束编码到程序中。 |
+| [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | 正在阅读或编辑 TypeScript。它用具体语法落实类型系统纪律原则。 |
+| [`/figure-it-out`](./skills/figure-it-out/SKILL.md) | 没有适合的内置操作流程。它会为任务设计严谨、可审计的流程。 |
+| [`/show-me-your-work`](./skills/show-me-your-work/SKILL.md) | 想留下可评审的决策记录。它将决策写入可提交的 TSV 文件。 |
+| [`/create-verification-skill`](./skills/create-verification-skill/SKILL.md) | 项目没有脚本化的应用行为验证方法。它为项目生成包含功能清单的验证技能，适用于任何语言或平台。 |
+| [`/maintain-verification-skill`](./skills/maintain-verification-skill/SKILL.md) | 验证技能的功能清单已与应用不一致。它会先检查源码，再做一次实际运行验证，最多提交一个包含已证实修正的 PR。 |
+| [`/unslop`](./skills/unslop/SKILL.md) | 想清理文字，去掉 AI 写作痕迹。 |
+| [`/bro`](./skills/bro/SKILL.md) | 想把上一条消息改写为直白的人话，不用术语。 |
+| [`/technical-writing`](./skills/technical-writing/SKILL.md) | 需要编写文档、RFC、README、PR 描述或提交消息。它结合 Diátaxis、Google 开发者写作风格、STE 和 Global English 规范。 |
 
 </details>
 
+### 示例
 
-
-### examples
-
-mostly i type [`/poteto-mode`](./skills/poteto-mode/SKILL.md) at the start of a task and let it route to a playbook. the other skills fire as the steps need them. a few i reach for directly.
-
+我通常在任务开始时输入 [`/poteto-mode`](./skills/poteto-mode/SKILL.md)，让它选择操作流程。其他技能按步骤需要调用。有时我也会直接调用个别技能。
 
 <details>
-<summary>all the examples</summary>
+<summary>全部示例</summary>
 
 ```
 bug fix:           /poteto-mode this pr has a subtle bug where the scroll drifts every 750ms even
@@ -232,80 +228,80 @@ help:              /poteto-help which skill should i use to review this branch?
 
 </details>
 
-## the `poteto-agent` and Comment Sicko subagents
+## `poteto-agent` 和 Comment Sicko 子代理
 
-pstack also ships a subagent that runs my style end to end. spawn it from a parent agent via [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md). it reads `poteto-mode` in full, including its inline principles index, before doing any work. substituting `generalPurpose` skips that read and drifts.
+pstack 还提供一个完整采用我的工作风格的子代理。通过 [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md) 从主代理启动它。它开始工作前会完整读取 `poteto-mode`，包括其中的原则索引。用 `generalPurpose` 替代会跳过这一步，导致执行偏离要求。
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) and [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md) route through the same wrapper.
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 和 [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md) 使用同一个封装入口。
 
-pstack also ships [Comment Sicko](./agents/comment-sicko.md), a read-only comment reviewer available as `subagent_type: "Comment Sicko"`. usually invoke it through [`/no-comments`](./skills/no-comments/SKILL.md), not directly.
+pstack 还提供 [Comment Sicko](./agents/comment-sicko.md)，一个只读的注释评审子代理，可通过 `subagent_type: "Comment Sicko"` 使用。通常通过 [`/no-comments`](./skills/no-comments/SKILL.md) 调用它，而不是直接启动。
 
-## principles
+## 原则
 
-twenty-four short skills, one principle each. `poteto-mode` indexes them inline and reads that index at task start. the standalone files are there so other skills can reference a principle by name, and so the index can point at the full rule for each.
+二十四个短技能，每个对应一条原则。`poteto-mode` 内置原则索引，在任务开始时读取。独立文件让其他技能能按名称引用原则，也让索引能链接到每条原则的完整规则。
 
 <details>
-<summary>all twenty-four principles</summary>
+<summary>全部二十四条原则</summary>
 
-| principle | group | rule |
+| 原则 | 分组 | 规则 |
 |---|---|---|
-| [laziness-protocol](./skills/principle-laziness-protocol/SKILL.md) | core | Bias toward deletion and the smallest change that solves the problem. |
-| [foundational-thinking](./skills/principle-foundational-thinking/SKILL.md) | core | Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious. |
-| [redesign-from-first-principles](./skills/principle-redesign-from-first-principles/SKILL.md) | core | Redesign as if the requirement had been a foundational assumption from day one, instead of bolting it on. |
-| [attack-the-premise](./skills/principle-attack-the-premise/SKILL.md) | core | Apply when two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it. |
-| [subtract-before-you-add](./skills/principle-subtract-before-you-add/SKILL.md) | core | Remove dead weight, redundant validators, and stub references first, then build on the simpler base. |
-| [minimize-reader-load](./skills/principle-minimize-reader-load/SKILL.md) | core | Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope. |
-| [outcome-oriented-execution](./skills/principle-outcome-oriented-execution/SKILL.md) | core | Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code. |
-| [experience-first](./skills/principle-experience-first/SKILL.md) | core | Choose user delight over implementation convenience; ship fewer polished features over more rough ones. |
-| [exhaust-the-design-space](./skills/principle-exhaust-the-design-space/SKILL.md) | core | Build 2-3 competing prototypes and compare side by side before committing. |
-| [build-the-lever](./skills/principle-build-the-lever/SKILL.md) | core | Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun. |
-| [model-the-domain](./skills/principle-model-the-domain/SKILL.md) | architecture | Encode the domain in a structure instead of scattered conditionals. |
-| [boundary-discipline](./skills/principle-boundary-discipline/SKILL.md) | architecture | Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions. |
-| [type-system-discipline](./skills/principle-type-system-discipline/SKILL.md) | architecture | Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, refuse to lie to the compiler, exhaust variants, derive from authoritative schemas. |
-| [make-operations-idempotent](./skills/principle-make-operations-idempotent/SKILL.md) | architecture | Converge to the same end state regardless of partial prior runs. |
-| [migrate-callers-then-delete-legacy-apis](./skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | architecture | Migrate callers and delete the old API in the same wave instead of preserving compatibility layers. |
-| [separate-before-serializing-shared-state](./skills/principle-separate-before-serializing-shared-state/SKILL.md) | architecture | Eliminate the sharing first; serialize structurally only when one shared writer is a real invariant. |
-| [prove-it-works](./skills/principle-prove-it-works/SKILL.md) | verification | Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'. |
-| [fix-root-causes](./skills/principle-fix-root-causes/SKILL.md) | verification | Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes. |
-| [sequence-verifiable-units](./skills/principle-sequence-verifiable-units/SKILL.md) | verification | Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer. |
-| [test-behavior-not-implementation](./skills/principle-test-behavior-not-implementation/SKILL.md) | verification | Apply when you write, change, or keep a test. Call the code the way its users do and assert the result they observe against a literal expected value. If the test would still pass when every imported function returns undefined, rewrite the assertion or delete the test. |
-| [explain-the-number](./skills/principle-explain-the-number/SKILL.md) | verification | Apply before you trust, report, or act on a number you measured: a speedup, a regression, a throughput, a latency, or an eval result. Find what limits it, and rule out that it measured something other than the work you think. |
-| [guard-the-context-window](./skills/principle-guard-the-context-window/SKILL.md) | delegation | Route bulk to subagents; keep summaries in the main thread, not raw payloads. |
-| [never-block-on-the-human](./skills/principle-never-block-on-the-human/SKILL.md) | delegation | Proceed, present the result, let the human course-correct after the fact; reserve confirmation for irreversible actions. |
-| [encode-lessons-in-structure](./skills/principle-encode-lessons-in-structure/SKILL.md) | meta | Encode the rule as a lint, metadata flag, runtime check, or script instead of more text. |
+| [laziness-protocol](./skills/principle-laziness-protocol/SKILL.md) | 核心 | 优先删除，只做解决问题所需的最小改动。 |
+| [foundational-thinking](./skills/principle-foundational-thinking/SKILL.md) | 核心 | 写逻辑前先考虑核心类型和数据结构、基础结构与功能的实现顺序，以及并发参与者共享什么。选对数据结构，让后续代码的写法更明确。 |
+| [redesign-from-first-principles](./skills/principle-redesign-from-first-principles/SKILL.md) | 核心 | 将新需求视为从第一天就存在的基础条件重新设计，而不是在现有设计上追加。 |
+| [attack-the-premise](./skills/principle-attack-the-premise/SKILL.md) | 核心 | 两次或更多修复基于同一个前提，却未通过同一项检查时，先查清哪些参与者存在失衡，再质疑该前提，不要继续基于它修补。 |
+| [subtract-before-you-add](./skills/principle-subtract-before-you-add/SKILL.md) | 核心 | 先删除无用内容、重复校验和占位引用，再在更简单的基础上继续。 |
+| [minimize-reader-load](./skills/principle-minimize-reader-load/SKILL.md) | 核心 | 检查从问题到答案要经过多少层，以及读者必须记住多少隐含状态。合并只有一个调用方的封装，缩小可变状态的作用域。 |
+| [outcome-oriented-execution](./skills/principle-outcome-oriented-execution/SKILL.md) | 核心 | 有明确阶段边界的重写和迁移应收敛到目标架构，不要用之后要丢弃的兼容代码维持平滑的中间状态。 |
+| [experience-first](./skills/principle-experience-first/SKILL.md) | 核心 | 优先考虑用户体验，而不是实现方便。宁可交付较少但完善的功能，也不要交付更多粗糙功能。 |
+| [exhaust-the-design-space](./skills/principle-exhaust-the-design-space/SKILL.md) | 核心 | 构建两到三个相互竞争的原型，并排比较后再决定。 |
+| [build-the-lever](./skills/principle-build-the-lever/SKILL.md) | 核心 | 所有非简单工作，包括编辑、迁移、分析和检查，都应构建能执行或验证工作的工具。使用 codemod、脚本、生成器或子代理遵循的技能，而不是只靠手工。评审者应能重新运行该工具。 |
+| [model-the-domain](./skills/principle-model-the-domain/SKILL.md) | 架构 | 用结构表达领域，而不是让领域规则散落在条件判断中。 |
+| [boundary-discipline](./skills/principle-boundary-discipline/SKILL.md) | 架构 | 将防御性检查集中在 CLI、配置、网络和外部 API 等系统边界。信任内部类型，保持业务逻辑纯粹。 |
+| [type-system-discipline](./skills/principle-type-system-discipline/SKILL.md) | 架构 | 让非法状态无法表示。为有特定语义的基础值使用品牌类型，在边界解析外部数据，不绕过编译器，穷尽处理所有变体，并从权威 schema 派生类型。 |
+| [make-operations-idempotent](./skills/principle-make-operations-idempotent/SKILL.md) | 架构 | 无论之前执行到哪一步，重复执行都收敛到同一个最终状态。 |
+| [migrate-callers-then-delete-legacy-apis](./skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | 架构 | 一次迁移所有调用方并删除旧 API，不保留兼容层。 |
+| [separate-before-serializing-shared-state](./skills/principle-separate-before-serializing-shared-state/SKILL.md) | 架构 | 先消除共享。只有确实必须由一个共享写入者操作时，才通过结构保证串行执行。 |
+| [prove-it-works](./skills/principle-prove-it-works/SKILL.md) | 验证 | 完成任务、宣布结束前，直接检查真实产物。运行功能，读取实际值，检查 diff，而不是依赖间接信号、自我报告或“能编译”。 |
+| [fix-root-causes](./skills/principle-fix-root-causes/SKILL.md) | 验证 | 将每个现象追溯到根因，在根因处修复。先复现，持续追问原因，不要靠空值检查掩盖崩溃。 |
+| [sequence-verifiable-units](./skills/principle-sequence-verifiable-units/SKILL.md) | 验证 | 将多步骤工作拆成小单元，每个单元结束时都可验证。验证一个再做下一个，让交付顺序本身证明工作可靠。 |
+| [test-behavior-not-implementation](./skills/principle-test-behavior-not-implementation/SKILL.md) | 验证 | 按用户的方式调用代码，用明确的预期值断言结果。如果所有导入函数都返回 undefined 时测试仍会通过，就重写断言或删除测试。 |
+| [explain-the-number](./skills/principle-explain-the-number/SKILL.md) | 验证 | 在信任、报告或采用测量结果前，找出限制因素，并排除测量对象与目标工作不一致的情况。适用于性能提升、吞吐、延迟和评估结果。 |
+| [guard-the-context-window](./skills/principle-guard-the-context-window/SKILL.md) | 委派 | 将大量阅读和处理工作交给子代理。主线程保留摘要，不堆积原始内容。 |
+| [never-block-on-the-human](./skills/principle-never-block-on-the-human/SKILL.md) | 委派 | 先执行并展示结果，让用户之后纠正方向。只有不可逆操作才需要先确认。 |
+| [encode-lessons-in-structure](./skills/principle-encode-lessons-in-structure/SKILL.md) | 元规则 | 将规则落实为 lint、元数据标记、运行时检查或脚本，而不是继续追加文字。 |
 
 </details>
 
-## not shipped here
+## 未包含的工具
 
-a few things `poteto-mode` references but doesn't bundle:
+`poteto-mode` 引用了以下工具，但 pstack 不提供它们：
 
-- `/deslop` and the `deslop` skill ship in the `cursor-team-kit` plugin.
-- `control-cli` (for CLIs and TUIs) and `control-ui` (for browser, Electron, web) ship in `cursor-team-kit` too.
-- `/create-skill` is a cursor built-in. cursor also ships a built-in `/babysit`; inside `poteto-mode`, the [babysit playbook](./skills/poteto-mode/playbooks/babysit.md) supersedes it for pr-status requests.
+- `/deslop` 和 `deslop` 技能来自 `cursor-team-kit` 插件。
+- `control-cli` 用于 CLI 和 TUI，`control-ui` 用于浏览器、Electron 和 Web，同样来自 `cursor-team-kit`。
+- `/create-skill` 是 Cursor 内置功能。Cursor 也有内置的 `/babysit`。在 `poteto-mode` 中，PR 状态请求使用本项目的 [babysit 操作流程](./skills/poteto-mode/playbooks/babysit.md)，而不是 Cursor 内置技能。
 
-install `cursor-team-kit` alongside pstack if you want the full set.
+如果需要完整工具集，请同时安装 `cursor-team-kit`。
 
-## why are there no planning skills?
+## 为什么没有规划技能？
 
-cursor already has a great plan mode which works great with pstack. but personally, i don't believe in planning. the best spec is code. if you do want to make a plan, [`/poteto-mode`](./skills/poteto-mode/SKILL.md) covers it, but it's not a default. 
+Cursor 已有很好的 Plan 模式，可以配合 pstack 使用。但我个人并不相信先做规划。最好的规格说明是代码。如果你确实想制定计划，[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 也支持，只是不将它作为默认步骤。
 
-## make it yours
+## 按你的需要调整
 
-`poteto-mode` is my style. you may not want exactly that.
+`poteto-mode` 体现的是我的风格。你未必想完全照用。
 
-type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent transcripts, drafts a `<your-name>-mode` skill from how you've actually worked, and routes through pstack underneath. you keep pstack as the base and end up with your own routing skill alongside `poteto-mode`.
+输入 [`/automate-me`](./skills/automate-me/SKILL.md)。它会分析你近期的会话记录，根据你的实际工作方式生成 `<your-name>-mode` 技能，并通过底层的 pstack 调用其他技能。你保留 pstack 作为基础，同时得到一个与 `poteto-mode` 并存的专属调度技能。
 
-models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a model. every skill reads it and falls back to sensible defaults when the rule is absent, so you override only what you want.
+模型也可配置。输入 [`/setup-pstack`](./skills/setup-pstack/SKILL.md)。它会检测你能使用的模型，写入一条始终生效的小型规则，将代码、判断和评审组合等角色映射到模型。每个技能都会读取该规则。规则不存在时使用默认配置，所以只需覆盖想修改的部分。
 
-when a default changes, a rule written before the change still pins the old default. delete those role lines, or delete the file, then run `/setup-pstack` again. a rerun keeps any role whose model differs from the default.
+默认模型变化后，之前写入的规则仍会固定使用旧默认值。删除对应角色的配置行，或删除整个文件，再运行 `/setup-pstack`。重新运行时，会保留模型与当前默认值不同的角色配置。
 
-## automations
+## 自动化
 
-pstack also ships a dormant [benny automation pack](./automations/benny/). benny triages slack issue reports, then reproduces and fixes confirmed bugs with real ui evidence. its files are not registered as slash skills.
+pstack 还提供一个默认未启用的 [benny 自动化包](./automations/benny/)。benny 会初步处理 Slack 中的问题报告，再借助真实 UI 证据复现并修复确认存在的 bug。这些文件不会注册为斜杠技能。
 
-to set it up, point cursor at [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md). setup copies the pack into the target repository at `.cursor/automations/benny/`, enables pstack there for shared skills, and keeps user configuration outside the copied pack.
+要配置它，请让 Cursor 读取 [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md)。配置过程将包复制到目标仓库的 `.cursor/automations/benny/`，在目标仓库启用 pstack 以共享技能，并将用户配置保留在复制的包之外。
 
-## license
+## 许可证
 
 MIT
