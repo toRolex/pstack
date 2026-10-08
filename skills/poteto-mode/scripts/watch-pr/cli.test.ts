@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { type CliRuntime, main, parseArgs } from "./cli.ts";
 import { fakeReader, passingCheck } from "./fakes.test-helper.ts";
+import { WatcherQueryError } from "./github.ts";
 import { renderJson, renderPretty } from "./render.ts";
 import type { GitHubReader, WatcherVerdict } from "./types.ts";
 import { parsePrNumber } from "./types.ts";
@@ -189,6 +190,91 @@ describe("main", () => {
       mode: "queued-stack",
     });
     expect(harness.stdout[0]).not.toContain('"kind":"QUEUE"');
+  });
+
+  for (const mode of [[], ["--stack"], ["--queued-stack", "--stack-prs", "1"]]) {
+    it(`stops status-only on the first query failure in ${mode[0] ?? "single"} mode`, async () => {
+      const reader = {
+        ...fakeReader(),
+        async reviewThreads() {
+          throw new WatcherQueryError({
+            kind: "command-exit",
+            retryable: true,
+            code: 1,
+            detail: "rate limited",
+          });
+        },
+      };
+      const harness = testRuntime(reader);
+      const code = await main(
+        [
+          "--owner",
+          "owner",
+          "--repo",
+          "repo",
+          "--pr",
+          "1",
+          ...mode,
+          "--status-only",
+          "--max-query-errors",
+          "9",
+        ],
+        harness.runtime
+      );
+      expect(code).toBe(7);
+      expect(harness.stdout.map((line) => JSON.parse(line))).toMatchObject([
+        {
+          kind: "BLOCKER",
+          terminal: true,
+          exitCode: 7,
+          blocker: {
+            kind: "status-query",
+            failures: 1,
+            failure: { kind: "command-exit", code: 1, detail: "rate limited" },
+          },
+        },
+      ]);
+      expect(harness.stdout).toHaveLength(1);
+    });
+  }
+
+  it("retries a query failure and recovers outside status-only", async () => {
+    const base = fakeReader();
+    let failNext = true;
+    const harness = testRuntime({
+      ...base,
+      async reviewThreads(context) {
+        if (failNext) {
+          failNext = false;
+          throw new WatcherQueryError({
+            kind: "command-exit",
+            retryable: true,
+            code: 1,
+            detail: "rate limited",
+          });
+        }
+        return base.reviewThreads(context);
+      },
+    });
+    const runtime = {
+      ...harness.runtime,
+      clock: { ...harness.runtime.clock, async sleep() {} },
+    };
+    const code = await main(
+      ["--owner", "owner", "--repo", "repo", "--pr", "1"],
+      runtime
+    );
+    expect(code).toBe(0);
+    expect(harness.stdout.map((line) => JSON.parse(line))).toMatchObject([
+      {
+        kind: "RETRY",
+        terminal: false,
+        consecutiveFailures: 1,
+        retryInSeconds: 60,
+      },
+      { kind: "READY", terminal: true, exitCode: 0 },
+    ]);
+    expect(harness.stdout).toHaveLength(2);
   });
 
   it("returns exit 4 for a hidden GitHub-side CI refusal", async () => {
