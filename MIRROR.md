@@ -1,47 +1,13 @@
-# Syncing this mirror
+# Syncing this fork
 
-This repo mirrors [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) and adds its own edits: the top of `README.md` and harness-neutral rewrites in some skills.
-
-Two branches keep those edits safe:
-
-- `upstream` holds Cursor's files exactly, with no local edits.
-- `main` is `upstream` plus this mirror's edits.
-
-Never copy Cursor's files onto `main` directly. That erases the edits.
+This fork follows Lauren Tan's [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) directly. There is no intermediate mirror source. Preserve fork-specific changes while syncing the author's `pstack/` directory, especially Chinese `README.md`, the adapted introduction in `README.en.md`, cross-harness instructions, `tdd-pstack`, and the Herdr-backed `make-bot-ui` server. The [`backnotprop/bro`](https://github.com/backnotprop/bro) project remains an external dependency referenced by the `bro` skill, not an update source.
 
 ## Steps
 
-1. Copy Cursor's latest `pstack/` folder onto the `upstream` branch:
+1. Fetch or check out the author's latest `cursor/plugins` and record the exact commit SHA. Use the pure author baseline for the common ancestor when available. Compare the baseline-to-author changes with baseline-to-fork changes using a three-way merge or an equivalent per-file integration. Do not overwrite fork changes wholesale.
+2. Integrate all author additions and edits. For overlapping changes, keep the author's current meaning and retain the fork's harness-neutral adaptation. In particular, author revisions to `how`, `why`, and `reflect` must not remove the fork's subagent, settings, transcript, or skill-folder mappings.
+3. Keep the upstream README body in `README.en.md` byte-for-byte below its fork-specific introduction. Keep the default `README.md` in Chinese, update its upstream-derived content and fork-specific introduction, and add entries for new upstream skills. Keep references to `tdd-pstack` and the Herdr server intact.
+4. Update `.cursor-plugin/plugin.json` to the author version. Check all local Markdown links and SKILL frontmatter after the merge. Review every difference from the author tree and confirm it is a documented fork adaptation.
+5. Refresh the bundled Comment Sicko prompt only when its author source changed. Check upstream skill diffs for Cursor-only tool names and reapply harness mappings where needed. The Harness section in `skills/poteto-mode/SKILL.md` is the mapping source of truth.
 
-   ```bash
-   git clone --depth 1 --filter=blob:none --sparse https://github.com/cursor/plugins.git /tmp/cursor-plugins
-   git -C /tmp/cursor-plugins sparse-checkout set pstack
-   git switch upstream
-   rsync -a --delete --exclude .git --exclude MIRROR.md /tmp/cursor-plugins/pstack/ ./
-   git add -A
-   git commit -m "upstream: cursor/plugins/pstack @ $(git -C /tmp/cursor-plugins rev-parse --short HEAD)"
-   ```
-
-2. Merge it into `main`. Git applies only what changed upstream and keeps the mirror's edits:
-
-   ```bash
-   git switch main
-   git merge upstream
-   ```
-
-   A conflict means Cursor changed a line this mirror also changed. Keep Cursor's new meaning and reapply the harness-neutral wording.
-
-3. Refresh the bundled Comment Sicko prompt, then check that no new Cursor-only instructions arrived:
-
-   ```bash
-   cp agents/comment-sicko.md skills/no-comments/references/comment-sicko.md
-   git diff upstream@{1} upstream -- skills | grep -nE '\.cursor/|agent-transcripts|cursor-team-kit|create-skill|Task'
-   ```
-
-   Rewrite any new hits the same way as the existing edits. The Harness section in `skills/poteto-mode/SKILL.md` lists the mappings.
-
-4. Push both branches:
-
-   ```bash
-   git push origin main upstream
-   ```
+Use jj to manage the workspace and do not push or publish unless explicitly requested.
