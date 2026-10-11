@@ -1,9 +1,9 @@
 中文 | [English](./README.en.md)
 
-<!-- 本页由原英文 README 翻译而来。镜像同步说明见 MIRROR.md，保留的英文版见 README.en.md。 -->
-# pstack 独立镜像
+<!-- 中文译文对应 README.en.md 中的上游说明；本 fork 的同步规则见 MIRROR.md。 -->
+# pstack 独立 Fork
 
-> 本仓库是 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) 的独立镜像，持续同步上游。
+> 本仓库直接跟进 Lauren Tan 的 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack)，并保留本 fork 的跨 harness 适配。
 > 可用于 Claude Code、Codex、Pi 等 agent，不限于 Cursor。
 > 另见 [`backnotprop/bro`](https://github.com/backnotprop/bro)，[`/bro`](./skills/bro/SKILL.md) 技能引用了该项目。
 
@@ -23,7 +23,7 @@ CLI 会显示可搜索的技能列表。先选择需要的技能，再选择要�
 
 以下技能不会调用其他 pstack 技能，可以单独使用：
 
-`unslop`、`bro`、`how`、`tdd`、`typescript-best-practices`、`arena`、`swarm`、`interrogate`、`reflect`、`show-me-your-work`、`figure-it-out`、`automate-me`
+`unslop`、`bro`、`how`、`tdd-pstack`、`typescript-best-practices`、`arena`、`swarm`、`interrogate`、`reflect`、`show-me-your-work`、`figure-it-out`、`automate-me`
 
 有些技能会调用其他技能。请一起安装：
 
@@ -37,9 +37,9 @@ CLI 会显示可搜索的技能列表。先选择需要的技能，再选择要�
 | `create-verification-skill` | `maintain-verification-skill` |
 | `poteto-mode` | 所有 `principle-*` 技能及大部分其他技能 |
 
-## 本镜像的改动
+## 本 fork 的改动
 
-许多技能原本只适用于 Cursor。本镜像已改写这些技能，使其可在其他 agent 运行环境中使用。
+许多上游技能原本面向 Cursor。本 fork 保留这些技能在 Claude Code、Codex、Pi、OpenCode 等 harness 中使用所需的适配；`tdd-pstack` 保留 fork 中的技能名，make-bot-ui 使用 Herdr 本地 server。
 
 ---
 
@@ -137,7 +137,7 @@ morning.
 
 ## 技能参考
 
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 会在需要时运行其中大部分技能，包括 `how`、`why`、`architect`、`arena`、`swarm`、`interrogate`、`unslop`、`no-comments`、`technical-writing`、`tdd` 和原则技能。想直接调用某个技能时，可查阅下表：
+[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 会在需要时运行其中大部分技能，包括 `how`、`why`、`architect`、`arena`、`swarm`、`interrogate`、`unslop`、`no-comments`、`technical-writing`、`tdd-pstack` 和原则技能。想直接调用某个技能时，可查阅下表：
 
 ```
 /how do we cancel runs? do we have an n+1 when we look up every run to cancel?
@@ -157,6 +157,7 @@ morning.
 | [`/how`](./skills/how/SKILL.md) | 想了解一个子系统如何工作。 |
 | [`/why`](./skills/why/SKILL.md) | 想了解为什么采用当前设计。它在运行时发现可用的 MCP，并行查询各类证据，包括版本控制、问题追踪、长篇文档、即时聊天、基础设施可观测数据、错误追踪和分析数据仓库。 |
 | [`/recall`](./skills/recall/SKILL.md) | 开始或恢复工作时，想从自己的聊天记录和共享记录中重建某个主题的近期上下文，得到简明的现状说明。 |
+| [`/ketchup`](./skills/ketchup/SKILL.md) | 想了解上次发言后对话中发生了什么，并获得便于决策的行动摘要。 |
 | [`/blast-radius`](./skills/blast-radius/SKILL.md) | 想知道一个看似很小的改动还可能影响什么，并通过实际运行代码证明它安全所依赖的关键事实，而不是只作断言。 |
 | [`/architect`](./skills/architect/SKILL.md) | 即将编写跨函数边界的代码，想先确定调用方式、类型和模块结构。 |
 | [`/arena`](./skills/arena/SKILL.md) | 想并行尝试同一个任务 N 次，再选取各次尝试中最好的部分。 |
@@ -168,7 +169,7 @@ morning.
 | [`/reflect`](./skills/reflect/SKILL.md) | 长任务完成后，想把工作方法记录为技能改动。 |
 | [`/correct`](./skills/correct/SKILL.md) | 不断纠正 agent 的同类错误。它会从历史记录中归纳错误类别，优先在最有效的层面修复，依次考虑架构、类型、lint、CI 和测试，最后才是文档。它还会维护规则与执行机制的对应表。 |
 | [`/teach`](./skills/teach/SKILL.md) | 想真正理解一个改动或子系统，而不只是看摘要。它会运行 how 和 why，结合图解逐步形成一份直白的说明。 |
-| [`/tdd`](./skills/tdd/SKILL.md) | 正在修复 bug，且本地测试成本低。先写失败测试，再修复。 |
+| [`/tdd-pstack`](./skills/tdd/SKILL.md) | 正在修复 bug，且本地测试成本低。先写失败测试，再修复。 |
 | [`/benchmark-checklist`](./skills/benchmark-checklist/SKILL.md) | 已运行基准测试，或测得性能提升或回退。在报告或采用数据前，检查限制因素、调优、错误、重复测量和端到端相关性。 |
 | [`/no-comments`](./skills/no-comments/SKILL.md) | 想在评审前清理注释。它会启动 Comment Sicko，修复认可的问题，并建议如何将声称存在的约束编码到程序中。 |
 | [`/typescript-best-practices`](./skills/typescript-best-practices/SKILL.md) | 正在阅读或编辑 TypeScript。它用具体语法落实类型系统纪律原则。 |
@@ -216,7 +217,7 @@ arena:             /arena take my prompt to the arena verbatim. i want to compar
 swarm:             /swarm check every package under packages/ against its check.sh. one worker per
                    package. one report.
 interrogate:       /interrogate review this pr.
-tdd:               /tdd implement
+tdd:               /tdd-pstack implement
 unslop:            can we unslop and tighten the new changes?
 reflect:           /reflect that took too long. capture what we learned so the next run doesn't
                    repeat it.
