@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Reflect
 
+In Claude Code, consult [the Claude Code adapter](references/claude-code.md) when a step needs Claude-specific tool, model, or path mappings.
+
 Mine the current conversation for durable learnings, then route them into skill edits.
 
 Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
@@ -26,7 +28,7 @@ Read the newest candidates first. Confirm a transcript by finding the conversati
 
 Use the harness's parallel subagent facility to launch three reviewers together. They need MCP access to look up tickets, chat threads, and observability traces referenced in the transcript, so use an MCP-enabled mode.
 
-Each reviewer and synthesizer uses a role line from the pstack model settings, or the table default if the file or line is absent. Cursor reads `~/.cursor/rules/pstack-models.mdc`; other harnesses read `~/.agents/pstack-models.md`. Leave `model` unset for `auto` or `inherit-parent`. If a configured model is unavailable, use the default and say so; if the default is unavailable, select the closest valid model of the same family.
+Each reviewer and synthesizer uses a role line from the harness-specific pstack model settings file listed in [`references/pstack-harness.md`](references/pstack-harness.md), or the table default if the file or line is absent. Set the subagent model to that role value or its default. Leave it unset for `auto` or `inherit-parent`. If the subagent tool rejects a configured model, use the default and say so; if the default is rejected, use the closest valid model of the same family from its error message. Pick the reasoning level and speed per [`references/pstack-harness.md`](references/pstack-harness.md).
 
 | Lens | Role line | Default model | Prompt template |
 |---|---|---|---|
@@ -49,6 +51,8 @@ Move any Accepted item that a lint rule, script, metadata flag, or runtime check
 Present the synthesizer's full Accepted / Rejected / Backlog output and wait for explicit approval before applying any Accepted edit. The user picks the subset and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
+
+Never edit a skill under `plugins/cache/`. Before approval, show its destination in the active harness's skill folder: `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/` in Cursor, `.claude/skills/<skill>/` or `~/.claude/skills/<skill>/` in Claude Code, or the equivalent project/user skill folder in another harness. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
 
 Follow each approved row's Routing exactly:
 

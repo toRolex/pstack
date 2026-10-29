@@ -11,31 +11,59 @@ Cursor 原 README 的中文译文在[本页下方](#pstack)。
 
 ## 安装
 
-pstack 是一组普通的 [Agent Skills](https://agentskills.io) 文件，路径为 `skills/<name>/SKILL.md`。使用它们不需要 Cursor。[`skills` CLI](https://skills.sh) 可以将技能安装到 Claude Code、Codex、Pi、Cursor、OpenCode 等 agent 中：
+每个 `skills/<目录>/` 都是一个标准 [Agent Skill](https://agentskills.io)。使用 [`skills` CLI](https://skills.sh) 安装到当前项目，并按提示选择技能和目标 agent：
 
 ```bash
 npx skills add toRolex/pstack
 ```
 
-CLI 会显示可搜索的技能列表。先选择需要的技能，再选择要安装到哪些 agent。
+也可指定技能和目标，例如：
+
+```bash
+npx skills add toRolex/pstack --skill how --skill poteto-help --agent claude-code
+```
+
+CLI 只复制所选技能目录及其中的 `references/`、`scripts/` 和资源，不会自动安装 sibling skills 或仓库根目录文件。需要跨技能协作时，按下表一起安装。
+
+也可以克隆仓库并逐项软链技能目录：
+
+```bash
+git clone https://github.com/toRolex/pstack.git
+ln -s "$PWD/pstack/skills/how" /path/to/agent/skills/how
+ln -s "$PWD/pstack/skills/tdd" /path/to/agent/skills/tdd-pstack
+```
+
+将 `/path/to/agent/skills` 换成目标 harness 的技能目录。软链名称按 `SKILL.md` 的安装名命名；`tdd-pstack` 的源目录仍是 `skills/tdd`。常规 Skills 安装会携带技能内提示词资源，但不会注册 `poteto-agent` 或 `comment-sicko` 这样的具名子代理；技能会在需要时把随包提示词交给通用子代理。Claude Code 适配仅在步骤需要时读取，不是安装前置条件。
 
 ## 技能
 
-以下技能不会调用其他 pstack 技能，可以单独使用：
+以下技能可单独安装并使用：
 
-`unslop`、`bro`、`how`、`tdd-pstack`、`typescript-best-practices`、`arena`、`swarm`、`interrogate`、`reflect`、`show-me-your-work`、`figure-it-out`、`automate-me`
+`unslop`、`bro`、`how`、`tdd-pstack`、`typescript-best-practices`、`arena`、`swarm`、`reflect`、`in-your-own-words`、`sharpen`、`poteto-help`、`create-formal-verification-skill`、`statechart`
 
-有些技能会调用其他技能。请一起安装：
+需要跨技能工作的场景，按对应分支一起安装：
 
-| 技能 | 同时安装 |
+| 技能 | 需同时安装 |
 |---|---|
 | `teach` | `how`、`why` |
 | `why` | `how` |
+| `ketchup-video` | `ketchup` |
+| `ketchup` | `bro` |
 | `technical-writing` | `unslop` |
+| `show-me-your-work` | `unslop` |
+| `figure-it-out` | `poteto-mode`、`show-me-your-work`；`architect`（设计分支） |
+| `automate-me` | `poteto-mode`、`unslop` |
 | `architect` | `arena`、`how` |
 | `blast-radius` | `arena`、`how`、`why`、`unslop` |
-| `create-verification-skill` | `maintain-verification-skill` |
-| `poteto-mode` | 所有 `principle-*` 技能及大部分其他技能 |
+| `interrogate` | `arena`、`in-your-own-words` |
+| `no-comments` | `how` 或 `why`（需要查代码时）；`architect`（需要设计修复形状时） |
+| `create-verification-skill` | `maintain-verification-skill`（之后维护生成的技能时） |
+| `create-formal-verification-skill` | `maintain-formal-verification-skill`（之后维护生成的技能时）；`statechart`（TLA+ 分支） |
+| `principle-explain-the-number` | `benchmark-checklist`（性能数字分支） |
+| `poteto-help` | `poteto-mode`（仅当用户要求开始实际工作时） |
+| `poteto-mode` | 所有 `principle-*` 技能；并按所选 playbook 安装其调用的技能 |
+
+`poteto-mode` 的完整跨技能路由可直接安装全部技能：`npx skills add toRolex/pstack --skill '*'`。CLI 不会自动解析这些依赖。
 
 ## 本 fork 的改动
 
@@ -154,10 +182,13 @@ morning.
 |---|---|
 | [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | 所有非简单任务的默认入口。 |
 | [`/poteto-help`](./skills/poteto-help/SKILL.md) | 刚开始使用 pstack，或不知道该选哪个技能、操作流程或原则。它会了解你的目标，回答相关问题，并给出可输入的提示词。仅在你输入 `/poteto-help` 时运行。 |
+| [`/in-your-own-words`](./skills/in-your-own-words/SKILL.md) | 开始前，先确认 agent 是否理解你的目标和问题。 |
+| [`/sharpen`](./skills/sharpen/SKILL.md) | 发送任务前，把提示词写得更深入，而不是扩大范围。 |
 | [`/how`](./skills/how/SKILL.md) | 想了解一个子系统如何工作。 |
 | [`/why`](./skills/why/SKILL.md) | 想了解为什么采用当前设计。它在运行时发现可用的 MCP，并行查询各类证据，包括版本控制、问题追踪、长篇文档、即时聊天、基础设施可观测数据、错误追踪和分析数据仓库。 |
 | [`/recall`](./skills/recall/SKILL.md) | 开始或恢复工作时，想从自己的聊天记录和共享记录中重建某个主题的近期上下文，得到简明的现状说明。 |
 | [`/ketchup`](./skills/ketchup/SKILL.md) | 想了解上次发言后对话中发生了什么，并获得便于决策的行动摘要。 |
+| [`/ketchup-video`](./skills/ketchup-video/SKILL.md) | 想通过带字幕的短视频回顾对话进展，并在视频下方查看待决事项。 |
 | [`/blast-radius`](./skills/blast-radius/SKILL.md) | 想知道一个看似很小的改动还可能影响什么，并通过实际运行代码证明它安全所依赖的关键事实，而不是只作断言。 |
 | [`/architect`](./skills/architect/SKILL.md) | 即将编写跨函数边界的代码，想先确定调用方式、类型和模块结构。 |
 | [`/arena`](./skills/arena/SKILL.md) | 想并行尝试同一个任务 N 次，再选取各次尝试中最好的部分。 |
@@ -177,6 +208,9 @@ morning.
 | [`/show-me-your-work`](./skills/show-me-your-work/SKILL.md) | 想留下可评审的决策记录。它将决策写入可提交的 TSV 文件。 |
 | [`/create-verification-skill`](./skills/create-verification-skill/SKILL.md) | 项目没有脚本化的应用行为验证方法。它为项目生成包含功能清单的验证技能，适用于任何语言或平台。 |
 | [`/maintain-verification-skill`](./skills/maintain-verification-skill/SKILL.md) | 验证技能的功能清单已与应用不一致。它会先检查源码，再做一次实际运行验证，最多提交一个包含已证实修正的 PR。 |
+| [`/create-formal-verification-skill`](./skills/create-formal-verification-skill/SKILL.md) | 想为最重要、测试最难覆盖的代码验证一个形式化性质，并生成项目本地的检查技能。 |
+| [`/maintain-formal-verification-skill`](./skills/maintain-formal-verification-skill/SKILL.md) | 代码变化后更新形式化模型或证明，并区分验证漂移与代码缺陷。 |
+| [`/statechart`](./skills/statechart/SKILL.md) | 检查 TLA+ 状态模型，并绘制 Mermaid 状态图和违反规则的最短路径。 |
 | [`/unslop`](./skills/unslop/SKILL.md) | 想清理文字，去掉 AI 写作痕迹。 |
 | [`/bro`](./skills/bro/SKILL.md) | 想把上一条消息改写为直白的人话，不用术语。 |
 | [`/technical-writing`](./skills/technical-writing/SKILL.md) | 需要编写文档、RFC、README、PR 描述或提交消息。它结合 Diátaxis、Google 开发者写作风格、STE 和 Global English 规范。 |
@@ -231,11 +265,7 @@ help:              /poteto-help which skill should i use to review this branch?
 
 ## `poteto-agent` 和 Comment Sicko 子代理
 
-pstack 还提供一个完整采用我的工作风格的子代理。通过 [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md) 从主代理启动它。它开始工作前会完整读取 `poteto-mode`，包括其中的原则索引。用 `generalPurpose` 替代会跳过这一步，导致执行偏离要求。
-
-[`/poteto-mode`](./skills/poteto-mode/SKILL.md) 和 [`subagent_type: "poteto-agent"`](./agents/poteto-agent.md) 使用同一个封装入口。
-
-pstack 还提供 [Comment Sicko](./agents/comment-sicko.md)，一个只读的注释评审子代理，可通过 `subagent_type: "Comment Sicko"` 使用。通常通过 [`/no-comments`](./skills/no-comments/SKILL.md) 调用它，而不是直接启动。
+根目录的 [`agents/poteto-agent.md`](./agents/poteto-agent.md) 和 [`agents/comment-sicko.md`](./agents/comment-sicko.md) 是提示词维护源；可移植副本随 [`poteto-mode`](./skills/poteto-mode/references/poteto-agent.md) 和 [`no-comments`](./skills/no-comments/references/comment-sicko.md) 技能分发。标准 Agent Skills 安装不会注册具名子代理。若 harness 没有已注册的对应 agent，技能会把随包提示词交给通用子代理；若 harness 没有子代理工具，则按技能指令串行执行。
 
 ## 原则
 
@@ -293,13 +323,13 @@ Cursor 已有很好的 Plan 模式，可以配合 pstack 使用。但我个人�
 
 输入 [`/automate-me`](./skills/automate-me/SKILL.md)。它会分析你近期的会话记录，根据你的实际工作方式生成 `<your-name>-mode` 技能，并通过底层的 pstack 调用其他技能。你保留 pstack 作为基础，同时得到一个与 `poteto-mode` 并存的专属调度技能。
 
-模型也可配置。输入 [`/setup-pstack`](./skills/setup-pstack/SKILL.md)。它会检测你能使用的模型，写入一条始终生效的小型规则，将代码、判断和评审组合等角色映射到模型。每个技能都会读取该规则。规则不存在时使用默认配置，所以只需覆盖想修改的部分。
+模型也可配置。输入 [`/setup-pstack`](./skills/setup-pstack/SKILL.md)。它会检测你能使用的模型，将代码、判断和评审组合等角色映射到模型。配置文件按 harness 区分：Cursor 使用 `~/.cursor/rules/pstack-models.mdc`，Claude Code 使用 `~/.claude/rules/pstack-models.md`，其他 harness 使用 `~/.agents/pstack-models.md`。规则不存在时使用默认配置，所以只需覆盖想修改的部分。
 
 默认模型变化后，之前写入的规则仍会固定使用旧默认值。删除对应角色的配置行，或删除整个文件，再运行 `/setup-pstack`。重新运行时，会保留模型与当前默认值不同的角色配置。
 
 ## 自动化
 
-pstack 还提供一个默认未启用的 [benny 自动化包](./automations/benny/)。benny 会初步处理 Slack 中的问题报告，再借助真实 UI 证据复现并修复确认存在的 bug。这些文件不会注册为斜杠技能。
+pstack 还提供一个默认未启用的 [benny 自动化包](./automations/benny/)。benny 会初步处理 Slack 中的问题报告，再借助真实 UI 证据复现并修复确认存在的 bug。这些文件不会注册为斜杠技能，也不属于 Claude Code 插件入口。
 
 要配置它，请让 Cursor 读取 [`FOR_AGENTS.md`](./automations/benny/FOR_AGENTS.md)。配置过程将包复制到目标仓库的 `.cursor/automations/benny/`，在目标仓库启用 pstack 以共享技能，并将用户配置保留在复制的包之外。
 
