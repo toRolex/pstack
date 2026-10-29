@@ -5,7 +5,7 @@
 - how 定向定位：done；交付 `/tmp/pstack-portable-plan-20261029.md`；定位23个adapter外部指针、13个Harness读取方、两个prompt及help指南资源；采用单源生成技能内资源的最小方案。
 - 通用分发修正与安装验收：done；产物已转回当前仓库，555路径与隔离候选逐字核对；45个技能内资源生成，真实CLI五项单技能/依赖组/全58项及clone58软链通过；删除误加Claude插件入口，保留既有Cursor版本元数据。
 - 独立审查：done；`/tmp/pstack-portable-review-20261029.md`两项P2已修复，正文依赖与playbook根路径回归检查通过；`/tmp/pstack-portable-final-tests-20261029.md`确认61项测试与typecheck通过，statechart物理TMPDIR下267通过/67跳过。
-- PR发布：进行中；目标 `toRolex/pstack`，准备在隔离任务分支提交与推送，不合并。
+- PR发布：done；https://github.com/toRolex/pstack/pull/4，目标main，OPEN且非draft；任务分支 `t3/portable-skills-install`，产品提交 `718effb57c5137c53b6a8db9d2015b33a3902450`；PR无远端检查项，未合并。发布后再次核实上游main仍为本次快照。
 
 ## 本轮步骤与验收
 1. Read the Principles section of the poteto-mode skill。done，本会话已加载。
@@ -13,7 +13,7 @@
 3. Phase B: Design the workflow。done，复用已有基线同步和测试，聚焦分发修正，不重做全部调查。
 4. Phase C: Run the loop。done，复制边界缺失已定位并由随包资源修复，实际CLI安装与软链检查通过。
 5. Phase D: Keep the audit trail。done，记录于本notes与本任务TSV，旧插件方向已明确标记为失效历史。
-6. Phase E: Verify and hand back。进行中，独立审查与最终测试通过，下一步创建PR。
+6. Phase E: Verify and hand back。done，独立审查发现已修复，最终测试通过且明确TLC跳过范围；PR #4已创建并关联当前会话。
 
 ## Throughput checkpoint
 - 既有0.15.36更新涉及511路径，复用已有源同步与审查证据；新增工作只处理安装契约、必要适配和资源可达性，不重新实现上游状态图工具。
