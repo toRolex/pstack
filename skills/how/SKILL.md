@@ -6,9 +6,11 @@ disable-model-invocation: true
 
 # How
 
+In Claude Code, consult [the Claude Code adapter](references/claude-code.md) when a step needs Claude-specific tool, model, or path mappings.
+
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Each spawn uses the harness subagent tool in read-only mode. Explorers use the `how explorer` model setting (default `grok-4.7-xhigh-fast`), and explainers use `how explainer` (default `claude-opus-5-5-xhigh`). Cursor reads `~/.cursor/rules/pstack-models.mdc`; other harnesses read `~/.agents/pstack-models.md` if present. Leave `model` unset for `auto` or `inherit-parent`. If a configured model is unavailable, use the default; if the default is unavailable, select the closest valid model of the same family and say so.
+Each spawn uses the harness subagent tool in read-only mode. Explorers use the `how explorer` model setting (default `grok-4.7-xhigh-fast`), and explainers use `how explainer` (default `claude-opus-5-5-xhigh`). Read the harness-specific pstack model settings file listed in [`references/pstack-harness.md`](references/pstack-harness.md). Set the subagent model to the role value or its default; leave it unset for `auto` or `inherit-parent`. If the tool rejects a configured model, use the role default and say so. If it rejects the default, use the closest valid model of the same family from its error message. Pick the reasoning level and speed for the job per [`references/pstack-harness.md`](references/pstack-harness.md).
 
 ## 1. Assess complexity
 
@@ -19,7 +21,7 @@ If the scope is ambiguous, state your interpretation and explore. The user can r
 
 When in doubt, take the simple path.
 
-**Other harnesses.** Each spawn uses the harness's subagent tool. For example, use `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), or `spawn_agent` in Codex. Keep the prompt and model, and drop unsupported parameters. If there is no subagent tool, run each role yourself, one after another. Cursor loads `~/.cursor/rules/pstack-models.mdc`; elsewhere, read `~/.agents/pstack-models.md` if it exists.
+**Other harnesses.** Each spawn uses the harness's subagent tool. For example, use `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), or `spawn_agent` in Codex. Keep the prompt and model, and drop unsupported parameters. If there is no subagent tool, run each role yourself, one after another. Read the active harness's pstack model settings file listed in [`references/pstack-harness.md`](references/pstack-harness.md).
 
 ## 2. Explore (complex only)
 

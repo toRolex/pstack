@@ -7,6 +7,8 @@ disable-model-invocation: true
 
 # 做一块手机面板
 
+In Claude Code, consult [the Claude Code adapter](references/claude-code.md) when a step needs Claude-specific tool, model, or path mappings.
+
 用户显式调用本 skill。给当前任务做一块网页：按钮和表单 POST 到本机 server，server 把事件投递给绑定的 herdr agent。你写面板文件，不写投递逻辑。
 
 路径：

@@ -1,0 +1,5 @@
+ts	phase	decision	why	evidence	result
+2026-10-29T07:43:09Z	frame	按通用Agent Skills镜像交付而非Claude插件发行	用户澄清目标并授权PR	pstack-0.15.36-claude-sync-implementation-notes.md	实施前确认
+2026-10-29T07:43:09Z	upstream	继续使用0.15.36快照	重新查询上游main未变化	1ba91fc25c0977741dd0e267849e6234b037ed0a	已核实
+2026-10-29T08:45:33Z	distribution	单源生成45个技能内资源并移除Claude插件包装	CLI仅复制选中技能目录，根docs和agents不可随包到达	scripts/generate-skill-resources.mjs	生成检查与真实安装通过
+2026-10-29T08:45:33Z	review	补齐三项技能依赖声明并修正Orchestrate随包adapter路径	独立审查发现可独立使用声明不实及根目录指针残留	scripts/test-skill-distribution.mjs	回归检查通过

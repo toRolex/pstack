@@ -6,9 +6,11 @@ disable-model-invocation: true
 
 # Why
 
+In Claude Code, consult [the Claude Code adapter](references/claude-code.md) when a step needs Claude-specific tool, model, or path mappings.
+
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Each spawn uses the harness subagent tool. Cursor's `Task` and other harnesses' subagent tools should run with the MCP access these investigators need. Set `model` to the configured role line in the pstack settings file, or to its default if no setting exists. Cursor reads `~/.cursor/rules/pstack-models.mdc`; elsewhere, read `~/.agents/pstack-models.md` if present. Leave `model` unset for `auto` or `inherit-parent`. If a model is unavailable, use the closest valid model of the same family and say so.
+Each spawn uses the harness's subagent tool with the MCP access investigators need. Set `model` to the configured role value in the harness-specific pstack settings file listed in [`references/pstack-harness.md`](references/pstack-harness.md), or to its default when the file or role line is missing. Leave `model` unset for `auto` or `inherit-parent`. Pick each investigator's reasoning level and speed per [`references/pstack-harness.md`](references/pstack-harness.md). If the subagent tool rejects a configured model, use the default and say so; if it rejects the default, use the closest valid slug of the same family from its error message.
 
 Give each spawn the harness's MCP-enabled agent mode. In Cursor this is `generalPurpose` with `readonly: false`; restricted read-only modes may remove MCP access and disable evidence lookups. Investigators should not write anything.
 
@@ -48,7 +50,7 @@ Source control is always available through the repository's version-control tool
 
 Spawn one investigator per category with a matching MCP, all in one message so they run concurrently, each owning exactly one tool or MCP. Do not assign one investigator multiple MCPs. Use the `why investigators` model setting, default `grok-4.7-xhigh-fast`.
 
-**Other harnesses.** Use the harness subagent tool, such as `Agent` in Claude Code, `task` in OpenCode, or `spawn_agent` in Codex. Keep the prompt and model; omit unsupported parameters. If there is no subagent tool, run each investigator yourself. Cursor reads `~/.cursor/rules/pstack-models.mdc`; other harnesses read `~/.agents/pstack-models.md` if present.
+**Other harnesses.** Use the harness subagent tool, such as `Agent` in Claude Code, `task` in OpenCode, or `spawn_agent` in Codex. Keep the prompt and model; omit unsupported parameters. If there is no subagent tool, run each investigator yourself. Read the active harness's pstack model settings file listed in [`references/pstack-harness.md`](references/pstack-harness.md).
 
 Each investigator receives `references/investigator-prompt.md` filled in, the selected category playbook from `references/sources/<source>.md`, `references/sources/incident-postmortem.md` when the target looks defensive, the code anchor, and the user's original question.
 

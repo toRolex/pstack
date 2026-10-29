@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Technical writing
 
+In Claude Code, consult [the Claude Code adapter](references/claude-code.md) when a step needs Claude-specific tool, model, or path mappings.
+
 Write so a tired engineer understands on the first read. Apply all four layers.
 
 Three rules sit above the layers:
